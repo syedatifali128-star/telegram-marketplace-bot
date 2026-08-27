@@ -44,11 +44,3 @@ async def on_startup() -> None:
 @app.get("/health")
 def health() -> dict:
     return {"status": "ok", "env": settings.app_env}
-
-
-import os
-import uvicorn
-
-# Bind port for Render
-port = int(os.environ.get("PORT", 10000))
-uvicorn.run(app, host="0.0.0.0", port=port)
