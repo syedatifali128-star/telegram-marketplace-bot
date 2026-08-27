@@ -68,7 +68,7 @@ client = TelegramClient("user_session", api_id, api_hash)
 
 
 async def send_advertisements():
-    await with client:
+    async with client:
     print("Broadcaster started successfully!")
 
     while True:
