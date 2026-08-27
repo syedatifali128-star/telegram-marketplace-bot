@@ -68,7 +68,7 @@ client = TelegramClient("user_session", api_id, api_hash)
 
 
 async def send_advertisements():
-    await client.start()
+    await with client:
     print("Broadcaster started successfully!")
 
     while True:
@@ -95,5 +95,4 @@ async def send_advertisements():
         await asyncio.sleep(INTERVAL_SECONDS)
 
 
-async with client:
-    await send_advertisements()
+
