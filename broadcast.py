@@ -86,11 +86,13 @@ async def send_advertisements():
                     await client.send_message(group, AD_TEXT)
                     print(f"[+] Post sent successfully to {group}")
             except errors.FloodWaitError as e:
-                print(f"[!] Rate limited on {group} for {e.seconds}s. Skipping to next group immediately.")
+                print(f"[!] Account rate-limited! Pausing 60s for {e.seconds} seconds before moving to next group immediately.")
+                await asyncio.sleep(e.seconds)
                 continue  
             except Exception as e:
                 if "wait of" in str(e).lower():
-                    print(f"[!] Wait limit caught on {group}: {e} Skipping...")
+                    print(f"[!] Account rate-limited! Pausing 60s group: before next group: {e}")
+                    await asyncio.sleep(60)
                     continue
                 print(f"[-] Failed to send to {group}: {e}")
 
