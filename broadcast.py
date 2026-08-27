@@ -95,5 +95,5 @@ async def send_advertisements():
         await asyncio.sleep(INTERVAL_SECONDS)
 
 
-with client:
-    client.loop.run_until_complete(send_advertisements())
+async with client:
+    await send_advertisements()
