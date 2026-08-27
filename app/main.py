@@ -46,8 +46,8 @@ def health() -> dict:
     return {"status": "ok", "env": settings.app_env}
 
 
- import os
- import uvicorn
+import os
+import uvicorn
 
 # Bind port for Render
 port = int(os.environ.get("PORT", 10000))
