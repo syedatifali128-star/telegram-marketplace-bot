@@ -80,10 +80,10 @@ async def send_advertisements():
 
             try:
                if topic_id:
-                   await client.send_message(group, ADVERTISEMENT_TEXT, reply_to=topic_id)
+                   await client.send_message(group, AD_TEXT, reply_to=topic_id)
                    print(f"[+] post sent successfully to {group} (Topic: {topic_id})")
                else: 
-                    await client.send_message(group, ADVERTISEMENT_TEXT)
+                    await client.send_message(group, AD_TEXT)
                     print(f"[+] Post sent successfully to {group}")
             except FloodWaitError as e:
                 print(f"[!] Rate limited on {group} for {e.seconds}s. Skipping to next group immediately.")
