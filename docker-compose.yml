@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  dashboard:
+    build: .
+    container_name: marketplace-dashboard
+    command: ["python", "-m", "app.main"]
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+  bot:
+    build: .
+    container_name: marketplace-bot
+    command: ["python", "-m", "app.bot.run_bot"]
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+    depends_on:
+      - dashboard

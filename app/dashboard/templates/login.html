@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login — Marketplace Manager</title>
+    <style>
+        body { background:#0f1117; color:#e6e8ee; font-family: system-ui, sans-serif;
+               display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+        .box { background:#171a23; border:1px solid #2a2e3a; border-radius:10px; padding:30px; width:300px; }
+        h1 { font-size:18px; margin-bottom:20px; }
+        label { font-size:12px; color:#8b90a0; display:block; margin-bottom:4px; }
+        input { width:100%; background:#0d0f15; border:1px solid #2a2e3a; color:#e6e8ee;
+                padding:9px 10px; border-radius:6px; margin-bottom:14px; font-size:14px; box-sizing:border-box; }
+        button { width:100%; background:#5b8cff; color:#fff; border:none; padding:10px; border-radius:6px; font-size:14px; cursor:pointer; }
+        .error { background: rgba(255,97,97,0.1); border:1px solid #ff6161; color:#ff6161; padding:8px 12px; border-radius:6px; margin-bottom:14px; font-size:13px; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h1>📡 Admin Login</h1>
+    {% if error %}<div class="error">Invalid username or password.</div>{% endif %}
+    <form method="post" action="/login">
+        <label>Username</label>
+        <input type="text" name="username" required autofocus>
+        <label>Password</label>
+        <input type="password" name="password" required>
+        <button type="submit">Log in</button>
+    </form>
+</div>
+</body>
+</html>

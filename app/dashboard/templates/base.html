@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Marketplace Manager{% endblock %}</title>
+    <style>
+        :root { --bg:#0f1117; --panel:#171a23; --border:#2a2e3a; --text:#e6e8ee; --muted:#8b90a0;
+                --accent:#5b8cff; --green:#3ddc84; --red:#ff6161; --yellow:#ffcf5c; }
+        * { box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif;
+               margin: 0; display:flex; min-height:100vh; }
+        nav { width: 200px; background: var(--panel); border-right: 1px solid var(--border); padding: 20px 0; flex-shrink:0; }
+        nav a { display:block; padding:10px 20px; color: var(--muted); text-decoration:none; font-size:14px; }
+        nav a:hover, nav a.active { color: var(--text); background: rgba(255,255,255,0.04); }
+        nav .brand { padding: 0 20px 20px; font-weight:700; color:var(--text); border-bottom:1px solid var(--border); margin-bottom:10px; }
+        main { flex:1; padding: 30px 40px; max-width: 1100px; }
+        h1 { font-size: 22px; margin-bottom: 20px; }
+        h2 { font-size: 16px; color: var(--muted); margin: 24px 0 12px; }
+        table { width:100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { text-align:left; padding: 8px 10px; border-bottom: 1px solid var(--border); font-size: 14px; }
+        th { color: var(--muted); font-weight:600; font-size:12px; text-transform:uppercase; }
+        .card { background: var(--panel); border:1px solid var(--border); border-radius:10px; padding:18px; margin-bottom:16px; }
+        .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap:14px; margin-bottom:20px; }
+        .stat { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:16px; }
+        .stat .num { font-size: 26px; font-weight:700; }
+        .stat .label { color: var(--muted); font-size:12px; text-transform:uppercase; }
+        .badge { padding:2px 8px; border-radius:20px; font-size:11px; font-weight:600; }
+        .badge.success, .badge.active, .badge.paid, .badge.verified { background: rgba(61,220,132,0.15); color: var(--green); }
+        .badge.failed, .badge.cancelled, .badge.rejected { background: rgba(255,97,97,0.15); color: var(--red); }
+        .badge.paused, .badge.pending, .badge.pending_verification, .badge.payment_submitted { background: rgba(255,207,92,0.15); color: var(--yellow); }
+        .badge.skipped, .badge.sending { background: rgba(139,144,160,0.15); color: var(--muted); }
+        form.inline { display:inline; }
+        input, select, textarea { background:#0d0f15; border:1px solid var(--border); color:var(--text);
+               padding:8px 10px; border-radius:6px; font-size:14px; width:100%; margin-bottom:10px; }
+        textarea { min-height: 90px; font-family: inherit; }
+        label { font-size:12px; color: var(--muted); display:block; margin-bottom:4px; }
+        button, .btn { background: var(--accent); color:#fff; border:none; padding:8px 16px; border-radius:6px;
+               font-size:13px; cursor:pointer; text-decoration:none; display:inline-block; }
+        button.secondary, .btn.secondary { background: transparent; border:1px solid var(--border); color:var(--text); }
+        button.danger { background: var(--red); }
+        .error { background: rgba(255,97,97,0.1); border:1px solid var(--red); color:var(--red);
+               padding:10px 14px; border-radius:6px; margin-bottom:16px; font-size:13px; }
+        .muted { color: var(--muted); font-size: 13px; }
+        .checkbox-list { max-height:220px; overflow-y:auto; border:1px solid var(--border); border-radius:6px; padding:10px; margin-bottom:10px; }
+        .checkbox-list label { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text); margin-bottom:6px; }
+        .checkbox-list input { width:auto; margin:0; }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="brand">📡 Marketplace Manager</div>
+    <a href="/" class="{% if request.url.path == '/' %}active{% endif %}">Dashboard</a>
+    <a href="/campaigns" class="{% if '/campaigns' in request.url.path %}active{% endif %}">Campaigns</a>
+    <a href="/groups" class="{% if '/groups' in request.url.path %}active{% endif %}">Groups</a>
+    <a href="/categories" class="{% if '/categories' in request.url.path %}active{% endif %}">Categories</a>
+    <a href="/services" class="{% if '/services' in request.url.path %}active{% endif %}">Services</a>
+    <a href="/orders" class="{% if '/orders' in request.url.path %}active{% endif %}">Orders</a>
+    <a href="/logs" class="{% if '/logs' in request.url.path %}active{% endif %}">Logs</a>
+    <form action="/logout" method="post" style="margin-top:20px; padding: 0 20px;">
+        <button type="submit" class="secondary" style="width:100%;">Log out</button>
+    </form>
+</nav>
+<main>
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

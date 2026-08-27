@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Logs{% endblock %}
+{% block content %}
+<h1>Posting Logs</h1>
+
+<div class="card">
+    <form method="get" action="/logs" style="display:flex; gap:10px; align-items:flex-end;">
+        <div style="flex:1;">
+            <label>Campaign</label>
+            <select name="campaign_id">
+                <option value="">All</option>
+                {% for c in campaigns %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}
+            </select>
+        </div>
+        <div style="flex:1;">
+            <label>Status</label>
+            <select name="status">
+                <option value="">All</option>
+                {% for s in statuses %}<option value="{{ s.value }}">{{ s.value }}</option>{% endfor %}
+            </select>
+        </div>
+        <button type="submit" style="margin-bottom:10px;">Filter</button>
+    </form>
+</div>
+
+<table>
+    <tr><th>Status</th><th>Campaign</th><th>Group</th><th>Scheduled</th><th>Attempted</th><th>Detail</th></tr>
+    {% for log in logs %}
+    <tr>
+        <td><span class="badge {{ log.status.value|lower }}">{{ log.status.value }}</span></td>
+        <td>{{ log.campaign.name if log.campaign else '—' }}</td>
+        <td>{{ log.group.name if log.group else '—' }}</td>
+        <td class="muted">{{ log.scheduled_for.strftime('%Y-%m-%d %H:%M') if log.scheduled_for else '—' }}</td>
+        <td class="muted">{{ log.attempted_at.strftime('%Y-%m-%d %H:%M') if log.attempted_at else '—' }}</td>
+        <td class="muted">{{ log.error_message or (log.telegram_message_id and ('msg #' ~ log.telegram_message_id)) or '' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="muted">No logs match this filter.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

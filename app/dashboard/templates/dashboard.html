@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<div class="grid">
+    <div class="stat"><div class="num">{{ active_campaigns|length }}</div><div class="label">Active campaigns</div></div>
+    <div class="stat"><div class="num">{{ paused_campaigns|length }}</div><div class="label">Paused campaigns</div></div>
+    <div class="stat"><div class="num">{{ active_groups|length }}</div><div class="label">Active groups</div></div>
+    <div class="stat"><div class="num">{{ total_categories }}</div><div class="label">Categories</div></div>
+    <div class="stat"><div class="num" style="color:#3ddc84">{{ success_count }}</div><div class="label">Recent success</div></div>
+    <div class="stat"><div class="num" style="color:#ff6161">{{ failed_count }}</div><div class="label">Recent failed</div></div>
+</div>
+
+<h2>Recent activity</h2>
+<div class="card">
+    <table>
+        <tr><th>Status</th><th>Campaign</th><th>Group</th><th>Attempted</th><th>Detail</th></tr>
+        {% for log in logs %}
+        <tr>
+            <td><span class="badge {{ log.status.value|lower }}">{{ log.status.value }}</span></td>
+            <td>{{ log.campaign.name if log.campaign else '—' }}</td>
+            <td>{{ log.group.name if log.group else '—' }}</td>
+            <td class="muted">{{ log.attempted_at.strftime('%Y-%m-%d %H:%M') if log.attempted_at else '—' }}</td>
+            <td class="muted">{{ log.error_message or (log.telegram_message_id and ('msg #' ~ log.telegram_message_id)) or '' }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="muted">No activity yet.</td></tr>
+        {% endfor %}
+    </table>
+    <a href="/logs" class="btn secondary">View all logs</a>
+</div>
+{% endblock %}

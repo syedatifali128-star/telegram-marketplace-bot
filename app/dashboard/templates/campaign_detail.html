@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ campaign.name }}{% endblock %}
+{% block content %}
+<h1>{{ campaign.name }} <span class="badge {{ campaign.status.value|lower }}">{{ campaign.status.value }}</span></h1>
+{% if request.query_params.get('error') %}<div class="error">{{ request.query_params.get('error') }}</div>{% endif %}
+
+<div class="card">
+    <h2 style="margin-top:0;">Controls</h2>
+    <p class="muted">Category: {{ campaign.category.name }} · Interval: {{ campaign.interval_seconds }}s · Next run: {{ campaign.next_execution_at.strftime('%Y-%m-%d %H:%M') if campaign.next_execution_at else '—' }}</p>
+    {% if campaign.status.value == 'ACTIVE' %}
+    <form class="inline" method="post" action="/campaigns/{{ campaign.id }}/pause"><button type="submit" class="danger">Pause</button></form>
+    {% else %}
+    <form class="inline" method="post" action="/campaigns/{{ campaign.id }}/resume"><button type="submit">Activate</button></form>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0;">Target groups (explicit assignment — isolation boundary)</h2>
+    <p class="muted">Only groups checked here will ever receive this campaign's posts.</p>
+    <form method="post" action="/campaigns/{{ campaign.id }}/assign-groups">
+        <div class="checkbox-list">
+            {% for g in all_groups %}
+            <label><input type="checkbox" name="group_ids" value="{{ g.id }}" {% if g.id in assigned_ids %}checked{% endif %}> {{ g.name }}</label>
+            {% endfor %}
+        </div>
+        <button type="submit">Save assignment</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0;">Message</h2>
+    <form method="post" action="/campaigns/{{ campaign.id }}/edit-message">
+        <textarea name="message_text">{{ campaign.message_text }}</textarea>
+        <button type="submit">Save message</button>
+    </form>
+</div>
+
+<h2>Recent posting log for this campaign</h2>
+<table>
+    <tr><th>Status</th><th>Group</th><th>Attempted</th><th>Detail</th></tr>
+    {% for log in logs %}
+    <tr>
+        <td><span class="badge {{ log.status.value|lower }}">{{ log.status.value }}</span></td>
+        <td>{{ log.group.name if log.group else '—' }}</td>
+        <td class="muted">{{ log.attempted_at.strftime('%Y-%m-%d %H:%M') if log.attempted_at else '—' }}</td>
+        <td class="muted">{{ log.error_message or '' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4" class="muted">No activity yet.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}
