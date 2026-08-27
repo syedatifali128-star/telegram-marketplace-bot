@@ -93,7 +93,7 @@ async def send_advertisements():
                     print(f"[!] Account rate-limited! Pausing 35s group: before next group: {e}")
                     await asyncio.sleep(35)
                 else:    
-                print(f"[-] Failed to send to {group}: {e}")
+                    print(f"[-] Failed to send to {group}: {e}")
 
             await asyncio.sleep(20)
 
