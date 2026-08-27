@@ -87,11 +87,10 @@ async def send_advertisements():
             except Exception as e:
                 print(f"[-] Failed to send to {group}: {e}")
 
-            # 20-second delay between groups to avoid spam filters
             await asyncio.sleep(20)
 
         print("\nWaiting 1 hour for the next broadcast round...\n")
-        await asyncio.sleep(INTERVAL_SECONDS)
+        await asyncio.sleep(3600)
 
 
 
