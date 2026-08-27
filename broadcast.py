@@ -87,6 +87,7 @@ async def send_advertisements():
                     print(f"[+] Post sent successfully to {group}")
             except FloodWaitError as e:
                 print(f"[!] Rate limited on {group} for {e.seconds}s. Skipping to next group immediately.")
+                continue  
             except Exception as e:
                 print(f"[-] Failed to send to {group}: {e}")
 
