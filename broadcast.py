@@ -1,5 +1,6 @@
 import asyncio
 from telethon import TelegramClient
+from telethon.errors import FloodWaitError
 
 # --- CONFIGURATION ---
 api_id = 35165310  
@@ -79,18 +80,20 @@ async def send_advertisements():
 
             try:
                if topic_id:
-                   await client.send_message(group, AD_TEXT, reply_to=topic_id)
+                   await client.send_message(group, ADVERTISEMENT_TEXT, reply_to=topic_id)
                    print(f"[+] post sent successfully to {group} (Topic: {topic_id})")
                else: 
-                    await client.send_message(group, AD_TEXT)
+                    await client.send_message(group, ADVERTISEMENT_TEXT)
                     print(f"[+] Post sent successfully to {group}")
+            except FloodWaitError as e:
+                print(f"[!] Rate limited on {group} for {e.seconds}s. Skipping to next group immediately.")
             except Exception as e:
                 print(f"[-] Failed to send to {group}: {e}")
 
-            await asyncio.sleep(20)
+                await asyncio.sleep(20)
 
-        print("\nWaiting 1 hour for the next broadcast round...\n")
-        await asyncio.sleep(3600)
+            print("\nWaiting 1 hour for the next broadcast round...\n")
+            await asyncio.sleep(3600)
 
 
 
