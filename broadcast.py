@@ -74,36 +74,44 @@ client = TelegramClient("user_session", api_id, api_hash)
 async def send_advertisements():
     await client.start()
     print("Broadcaster started successfully!")
+
     while True:
+        try:
             for item in target_groups:
                 if isinstance(item, tuple):
                     group, topic_id = item
                 else:
                     group, topic_id = item, None
 
-            try:
-               if topic_id:
-                   await client.send_message(group, AD_TEXT, reply_to=topic_id)
-                   print(f"[+] post sent successfully to {group} (Topic: {topic_id})")
-               else: 
-                    await client.send_message(group, AD_TEXT)
-                    print(f"[+] Post sent successfully to {group}")
-            except errors.FloodWaitError as e:
-                print(f"[!] Account rate-limited! Pausing {e.seconds}s seconds before moving to next group immediately.")
-                await asyncio.sleep(e.seconds + 5)  
-                continue
-            except Exception as e:
-                if "wait of" in str(e).lower():
-                    print(f"[!] Account rate-limited! Pausing 60s group: before next group: {e}")
-                    await asyncio.sleep(60)
+                try:
+                    if topic_id:
+                        await client.send_message(group, AD_TEXT, reply_to=topic_id)
+                        print(f"[+] Post sent successfully to {group} (Topic: {topic_id})")
+                    else:
+                        await client.send_message(group, AD_TEXT)
+                        print(f"[+] Post sent successfully to {group}")
+
+                except errors.FloodWaitError as e:
+                    print(f"[!] Account rate-limited! Pausing {e.seconds + 5}s...")
+                    await asyncio.sleep(e.seconds + 5)
                     continue
-                else:    
-                    print(f"[-] Failed to send to {group}: {e}")
 
-             await asyncio.sleep(60)
+                except Exception as e:
+                    if "wait of" in str(e).lower():
+                        print(f"[!] Pausing 60s for group due to limit: {e}")
+                        await asyncio.sleep(60)
+                        continue
+                    else:
+                        print(f"[-] Failed to send to {group}: {e}")
 
-        print("\nWaiting 1 hour for the next broadcast round...\n")
-        await asyncio.sleep(3600)
+                await asyncio.sleep(60)
+
+            print("\nWaiting 1 hour for the next broadcast round...\n")
+            await asyncio.sleep(3600)
+
+        except Exception as e:
+            print(f"[-] Critical error: {e}")
+            await asyncio.sleep(10)
 
 
 
