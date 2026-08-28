@@ -3,7 +3,7 @@ import logging
 from telethon import TelegramClient, errors
 from telethon.errors import FloodWaitError
 
-logging.getlogger('telethon').setlevel(logging.WARNING)
+logging.getLogger('telethon').setlevel(logging.WARNING)
 
 # --- CONFIGURATION ---
 api_id = 35165310  
