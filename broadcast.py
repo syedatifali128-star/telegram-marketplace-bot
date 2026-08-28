@@ -100,10 +100,10 @@ async def send_advertisements():
                 else:    
                     print(f"[-] Failed to send to {group}: {e}")
 
-            await asyncio.sleep(60)
+               await asyncio.sleep(60)
 
-        print("\nWaiting 1 hour for the next broadcast round...\n")
-        await asyncio.sleep(3600)
+           print("\nWaiting 1 hour for the next broadcast round...\n")
+           await asyncio.sleep(3600)
 
 
 
