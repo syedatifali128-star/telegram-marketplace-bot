@@ -22,6 +22,10 @@ logger = logging.getLogger("app")
 
 app = FastAPI(title="Telegram Marketplace Manager", version="0.1.0")
 
+@app.get("/")
+def home():
+  return {"status": "ok"}
+
 @app.exception_handler(NotAuthenticated)
 def handle_not_authenticated(request: Request, exc: NotAuthenticated):
     return RedirectResponse(url="/login", status_code=303)
