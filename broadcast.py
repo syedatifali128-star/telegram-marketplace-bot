@@ -74,7 +74,7 @@ client = TelegramClient("user_session", api_id, api_hash)
 async def send_advertisements():
     await client.start()
     print("Broadcaster started successfully!")
-        while True:
+    while True:
             for item in target_groups:
                 if isinstance(item, tuple):
                     group, topic_id = item
