@@ -102,8 +102,8 @@ async def send_advertisements():
 
                await asyncio.sleep(60)
 
-           print("\nWaiting 1 hour for the next broadcast round...\n")
-           await asyncio.sleep(3600)
+        print("\nWaiting 1 hour for the next broadcast round...\n")
+        await asyncio.sleep(3600)
 
 
 
