@@ -33,7 +33,7 @@ target_groups = [
     ("@pluggerz", 3),
     ("@sectorsocial", 22),
     ("@crisgalaxymarket", 6),
-    ("@SocialCove", 3,
+    ("@SocialCove", 3),
     ("@VipexMarket", 11),
     ("@errormystry", 94),
     ("@aizenmarket", 21),
