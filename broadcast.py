@@ -21,13 +21,31 @@ target_groups = [
     ("@porkmarket", 15),
     ("@Luxurmarket", 12),
     ("@buffestmarket", 20),
+    ("@celismarket", 92),
+    ("@sectormarket", 14),
+    ("@Escrowplace", 21),
+    ("@advertise", 8),
+    ("@mythicforum", 2),
+    ("@rareemarket", 2),
+    ("@totalsmp", 3757448),
+    ("@smandofm_marketplace", 236),
+    ("@marketogs", 127871),
+    ("@pluggerz", 3),
+    ("@sectorsocial", 22),
+    ("@crisgalaxymarket", 6),
+    ("@SocialCove", 3,
+    ("@VipexMarket", 11),
+    ("@errormystry", 94),
+    ("@aizenmarket", 21),
+    ("@guremarketplace", 2),
+    ("@stockless", 39),
 ]
 
 # Wait time between broadcast rounds (3600 seconds = 1 hour)
 INTERVAL_SECONDS = 3600
 
 # Your Complete Ad Text
-AD_TEXT = """Roboro SMM Service 📤
+AD_TEXT = """BROAPIX SMM Service 📤
 
 Tik tok 📱
 $6- 1,000 Followers 📈
@@ -66,7 +84,7 @@ Twitte 📱
 
 Other Services Available: 📌
 
-Contact:- 🔔@roborotemp"""
+Contact:- 🔔@broapix"""
 
 client = TelegramClient("user_session", api_id, api_hash)
 
@@ -98,13 +116,13 @@ async def send_advertisements():
 
                 except Exception as e:
                     if "wait of" in str(e).lower():
-                        print(f"[!] Pausing 60s for group due to limit: {e}")
-                        await asyncio.sleep(60)
+                        print(f"[!] Pausing 15s for group due to limit: {e}")
+                        await asyncio.sleep(15)
                         continue
                     else:
                         print(f"[-] Failed to send to {group}: {e}")
 
-                await asyncio.sleep(60)
+                await asyncio.sleep(15)
 
             print("\nWaiting 1 hour for the next broadcast round...\n")
             await asyncio.sleep(3600)
